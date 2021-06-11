@@ -3,13 +3,15 @@
 ### 快速上手
 
 - 下载代码
+
   ```c
   git clone https://gitee.com/SYSU-Unmanned-System-Group/dji_n3_sdk.git
   ```
   
 - 安装Onboard-SDK
+
   ```c
-cd dji_n3_sdk/src/Onboard-SDK-3.8
+  cd dji_n3_sdk/src/Onboard-SDK-3.8
   mkdir build
   cd build
   cmake ..
@@ -19,16 +21,18 @@ cd dji_n3_sdk/src/Onboard-SDK-3.8
 - 可能需要安装依赖项
 
   ```c
-sudo apt-get install ros-melodic-vrpn
+  sudo apt-get install ros-melodic-vrpn
   ```
   
 - 编译整个项目
+
   ```
   cd dji_n3_sdk/
   catkin_make
   ```
 
 - 使用
+
   ```
   ./all.sh
   ```
