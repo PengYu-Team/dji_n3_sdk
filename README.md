@@ -1,37 +1,56 @@
 # dji_n3_sdk
 
-#### 介绍
-N3飞控开发包
+### 快速上手
 
-#### 软件架构
-软件架构说明
+- 下载代码
+  ```c
+  git clone https://gitee.com/SYSU-Unmanned-System-Group/dji_n3_sdk.git
+  ```
+  
+- 安装Onboard-SDK
+  ```c
+cd dji_n3_sdk/src/Onboard-SDK-3.8
+  mkdir build
+  cd build
+  cmake ..
+  sudo make -j7 install
+  ```
+  
+- 可能需要安装依赖项
 
+  ```c
+sudo apt-get install ros-melodic-vrpn
+  ```
+  
+- 编译整个项目
+  ```
+  cd dji_n3_sdk/
+  catkin_make
+  ```
 
-#### 安装教程
+- 使用
+  ```
+  ./all.sh
+  ```
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+### 使用说明
+- N3飞控版本：v1.7.6.0
 
-#### 使用说明
+- 遥控器设置
+  - U，设置为REV，设置为模式切换，即 P\S\A （P为定点，A模式下才进入sdk控制）
+  - 起落架通道，不REV，设置为自动轨迹trigger
+  - 具体看截图
+- N3与机载电脑连接
+  - API接口，从左至右，空着、GND、RX、TX
+- SDK设置：启动API控制
+- 无人机姿态环抖动，调大动力带宽
+- 使用N3初始设置绑定的DJI账号中生成app_id和enc_key，加入djiros.launch文件中
+  - 首次启动需连接电脑激活（启动launch文件2次）
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+### 参考资料
 
-#### 参与贡献
+https://github.com/dji-sdk/Onboard-SDK/tree/3.8
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+https://github.com/dji-sdk/Onboard-SDK-ROS/tree/3.8
 
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+http://wiki.ros.org/dji_sdk
