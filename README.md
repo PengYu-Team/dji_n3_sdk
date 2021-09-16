@@ -11,7 +11,7 @@
 - 安装Onboard-SDK
 
   ```shell
-  cd dji_n3_sdk/Modules/Onboard-SDK
+  cd dji_n3_sdk/Onboard-SDK
   mkdir build
   cd build
   cmake ..
@@ -47,7 +47,8 @@
 
 ### N3飞控使用说明
 
-- **N3飞控官方网址：**https://www.dji.com/cn/n3/info#specs
+
+- **N3飞控官方网址:** https://www.dji.com/cn/n3/info#specs
 
 - **DJI 开发者账户注册与绑定**
 
@@ -102,12 +103,12 @@
 ### 代码说明
 
 - Onboard-SDK是DJI官方提供的3.7版本
-- controller/djiros是港科大改动过的Onboard-SDK-ROS，部分控制话题被修改
+- src/djiros是港科大改动过的Onboard-SDK-ROS，部分控制话题被修改
 - vrpn_clinet_ros是官方源码编译，注意修改launch文件中的动捕频率
 
-##### controller/n3ctrl说明
+##### src/n3ctrl说明
 
-- controller/n3ctrl是控制状态机+位置环控制器代码
+- src/n3ctrl是控制状态机+位置环控制器代码
 
 - 项目入口：n3ctrl_node.cpp，订阅发布话题如下
 
@@ -145,7 +146,7 @@
   - terminal_control.cpp
   - 依次输入x,y,z三点位置，用于位置控制，单位:米
 
-**controller/n3ctrl_sysu说明**
+**src/n3ctrl_sysu说明**
 
 - vicon_odom.cpp可直接订阅动捕的位置计算速度，然后发布odom信息至N3控制器
 - vicon_odom_without_vel.cpp可根据动捕的位置计算速度，然后发布odom信息至N3控制器

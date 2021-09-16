@@ -11,6 +11,7 @@ devel/
 dist/
 .vscode/
 src/Onboard-SDK/build
+src/CMakeLists.txt
 
 # pytorch/python/numpy formats
 # *.pth
