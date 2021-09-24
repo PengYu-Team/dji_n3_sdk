@@ -37,7 +37,7 @@
   ## 使用SSH或者远程桌面连接机载电脑
   ## 若机载电脑用户名有变动，请修改对应.sh文件
   窗口1：
-  source ./dji_n3_sdk/Scripts/vicon_all.sh
+  source ./dji_n3_sdk/Scripts/dji_control.sh
   窗口2：
   source ./dji_n3_sdk/Scripts/terminal_control.sh
   遥控器操作：

@@ -12,6 +12,7 @@ bool init_ok = false;
 bool vicon = true;
 string object_name;
 Eigen::Vector3d pos_now, pos_last, vel_now , att_rate;
+geometry_msgs::Quaternion att_now;
 Eigen::Vector3d vel_0, vel_1, vel_2, vel_3, vel_4, vel_filter;
 nav_msgs::Odometry Drone_odom;
 ros::Time time_now, time_last;
@@ -22,11 +23,7 @@ void mocap_pos_cb(const geometry_msgs::PoseStamped::ConstPtr &msg)
 {
     init_ok = true;
     pos_now << msg->pose.position.x, msg->pose.position.y, msg->pose.position.z;
-
-    //att_now = msg->pose.orientation;
-
-    Drone_odom.pose.pose.orientation = msg->pose.orientation;
-
+    att_now = msg->pose.orientation;
     time_pos = msg->header.stamp;
 }
 
@@ -37,10 +34,11 @@ void mocap_vel_cb(const geometry_msgs::TwistStamped::ConstPtr &msg)
     time_vel = msg->header.stamp;
 }
 
-void timerCallback(const ros::TimerEvent& e)
+void printf_cb(const ros::TimerEvent& e)
 {
     if (init_ok)
     {
+        cout << " DJI_N3 State: " << endl;
         cout << " odom_pos [x y z]: " << pos_now.x() << " [ m ] " << pos_now.y() << " [ m ] " << pos_now.z() << " [ m ] " << endl;
         cout << " odom_vel [x y z]: " << vel_now.x() << " [m/s] " << vel_now.y() << " [m/s] " << vel_now.z() << " [m/s] " << endl;
     }
@@ -61,12 +59,10 @@ int main(int argc, char **argv)
     // 将上述信息整合为里程计信息发布，用于位置环控制
     odom_pub = nh.advertise<nav_msgs::Odometry>("/dji_n3/odom", 10);
 
-
-    ros::Timer timer = nh.createTimer(ros::Duration(2.0), timerCallback);
+    ros::Timer printf_timer = nh.createTimer(ros::Duration(2.0), printf_cb);
 
     // 频率
     ros::Rate rate(100.0);
-
     //固定的浮点显示
     cout.setf(ios::fixed);
     //setprecision(n) 设显示小数精度为n位
@@ -78,7 +74,6 @@ int main(int argc, char **argv)
     // 强制显示符号
     cout.setf(ios::showpos);
 
-
     sleep(5.0);
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Main Loop<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -89,10 +84,9 @@ int main(int argc, char **argv)
 
         time_now = ros::Time::now();
 
-
-        if( (time_now - time_vel).toSec() > 0.1 || (time_now - time_pos).toSec() > 0.1)
+        if( (time_now - time_vel).toSec() > 0.2 || (time_now - time_pos).toSec() > 0.2)
         {
-            //cout << "\033[1;31m" << " ----> mocap pos/vel timeout "<< "\033[0m" << endl;
+            cout << "\033[1;31m" << " ----> mocap timeout! "<< "\033[0m" << endl;
         }
 
         Drone_odom.header.stamp            = time_now;
@@ -101,13 +95,13 @@ int main(int argc, char **argv)
         Drone_odom.pose.pose.position.x    = pos_now.x();
         Drone_odom.pose.pose.position.y    = pos_now.y();
         Drone_odom.pose.pose.position.z    = pos_now.z();
-
+        Drone_odom.pose.pose.orientation = att_now;
         Drone_odom.twist.twist.linear.x    = vel_now.x(); 
         Drone_odom.twist.twist.linear.y    = vel_now.y(); 
         Drone_odom.twist.twist.linear.z    = vel_now.z(); 
-        Drone_odom.twist.twist.angular.x    = att_rate.x(); 
-        Drone_odom.twist.twist.angular.y    = att_rate.y(); 
-        Drone_odom.twist.twist.angular.z    = att_rate.z();
+        Drone_odom.twist.twist.angular.x    = 0.0; 
+        Drone_odom.twist.twist.angular.y    = 0.0; 
+        Drone_odom.twist.twist.angular.z    = 0.0;
         if (init_ok)
         {
             odom_pub.publish(Drone_odom);

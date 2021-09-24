@@ -1,0 +1,7 @@
+<launch>
+	<arg name="object_name" default="dji_n3" />
+
+	<node pkg="n3ctrl_sysu" type="vicon_odom" name="vicon_odom" output="screen">
+        <param name="object_name" value="$(arg object_name)" />
+	</node>
+</launch>

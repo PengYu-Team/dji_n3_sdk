@@ -2,8 +2,14 @@
 mass        : 1.3
 gra         : 9.81
 # hov_percent会影响最大推力
-hov_percent : 0.15
+# use_hov_percent_kf设置为true之后，hov_percent只影响刚起飞时候油门
+# 飞机一旦进入定点控制，则会立即更新full_thrust
+# 此处其实可以直接将hov_percent设置为0
+# 悬停油门设置很有意思，可以加入prometheus中
+# 油门补偿也可以，但需要加速度值准确
+hov_percent : 0.25
 # full_thrust 会在程序中根据mass和hov_percent重新计算
+# 起飞前短暂时间使用的是hov_percent计算的悬停油门，起飞后会根据加速度状态更新full_thrust
 full_thrust : 60
 ctrl_rate   : 100.0
 js_ctrl_lock_velo: 0.3
@@ -14,9 +20,13 @@ hover:
     set_hov_percent_to_zero: false
     # 此处设置为true，则 full_thrust = mass * gra / hov_percent;
     use_hov_percent_kf: true
+    # z 轴速度小于这个才更新油门参数
     vert_velo_limit_for_update: 0.2
+   # z轴高度（包括期望高度）大于这个才更新油门参数
     vert_height_limit_for_update: 0.2
+    ## 最小悬停油门
     percent_lower_limit: 0.05
+    ## 最大悬停油门
     percent_higher_limit: 0.55
 
 gain:

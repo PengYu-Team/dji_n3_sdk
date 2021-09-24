@@ -4,11 +4,11 @@ source /home/dji/dji_n3_sdk/devel/setup.bash
 
 roslaunch djiros djiros.launch & sleep 5s;
 
-roslaunch vrpn_client_ros sample.launch & sleep 2s;
+roslaunch vrpn_client_ros sample.launch & sleep 1s;
 
-rosrun n3ctrl_pid vicon_odom & sleep 2s;
+roslaunch n3ctrl_sysu vicon_odom.launch & sleep 1s;
 
-roslaunch n3ctrl ctrl_md.launch & sleep 5s
+roslaunch n3ctrl ctrl_md.launch
 
 # roslaunch ego_planner real.launch & sleep 2s
 
