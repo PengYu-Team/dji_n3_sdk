@@ -1,7 +1,8 @@
 #include <ros/ros.h>
 #include <iostream>
-
 #include <quadrotor_msgs/PositionCommand.h>
+
+#include "printf_utils.h"
 
 using namespace std;
 
@@ -19,7 +20,6 @@ int main(int argc, char **argv)
 
     //　【发布】　控制指令
     pos_cmd_pub = nh.advertise<quadrotor_msgs::PositionCommand>("/terminal/point_cmd", 50);
-    // /terminal/point_cmd
 
     /* control parameter */
     cmd.kx[0] = pos_gain[0];
@@ -51,12 +51,11 @@ int main(int argc, char **argv)
         // Waiting for input
         cout << ">>>>>>>>>>>>>>>> Welcome to use dji Terminal Control <<<<<<<<<<<<<<<<"<< endl;
 
-        cout << "Please input the reference state [x y z]: "<< endl;
+        cout << "Please input the desire position --- x,y,z [m]: "<< endl;
         cin >> pos_sp[0] >> pos_sp[1] >> pos_sp[2];
 
         // cout << "setpoint_t[3] --- yaw [du] : "<< endl;
         // cin >> yaw_sp;
-
 
         cmd.header.stamp = ros::Time::now();
         cmd.header.frame_id = "world";

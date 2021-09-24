@@ -85,6 +85,7 @@ include_directories(
   ${EIGEN_INCLUDE_DIRS}
   include/${PROJECT_NAME}
   include
+  ../n3ctrl_sysu/include
 )
 
 # message(STATUS "*************catkin_INCLUDE_DIRS=" ${catkin_INCLUDE_DIRS})
@@ -117,11 +118,6 @@ add_dependencies(n3ctrl_node n3ctrl_generate_messages_cpp)
 target_link_libraries(n3ctrl_node
   ${catkin_LIBRARIES}
 )
-
-##terminal_control.cpp
-add_executable(terminal_control src/terminal_control.cpp)
-add_dependencies(terminal_control n3ctrl_generate_messages_cpp)
-target_link_libraries(terminal_control ${catkin_LIBRARIES})
 
 #############
 ## Install ##

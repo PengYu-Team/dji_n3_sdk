@@ -10,9 +10,6 @@ void N3CtrlFSM::process_control(const ros::Time& now_time)
 	Controller_Output_t u;
 	SO3_Controller_Output_t u_so3;
 
-	//ROS_WARN("[n3ctrl] state = %d",state); //zxzxzxzx
-	//result: state always equals 2
-	//ROS_WARN("[n3ctrl] js_ctrl_mode = %d",js_ctrl_mode); //zxzxzxzx
 	
 	// 手柄直接控制，是那么也不做
 	if (state == DIRECT_CTRL)
@@ -31,15 +28,13 @@ void N3CtrlFSM::process_control(const ros::Time& now_time)
 		}
 		else
 		{
-			// This function is called when it is running normally. zxzxzxzx
-			// js_ctrl_mode = feedback
-			// 执行手柄定点控制，（核心！！）
+			// 手柄位置定点控制
 			process_js_control(u, u_so3);
 		}
 	}
 	else if (state == JS_NO_CTRL)
 	{
-		ROS_WARN("[n3ctrl] state = JS_NO_CTRL");//zxzxzxzx
+		// ROS_WARN("[n3ctrl] state = JS_NO_CTRL");//zxzxzxzx
 		process_no_control(u, u_so3);
 	}
 	else if (state == JS_RESET_POS_CTRL)
@@ -48,14 +43,12 @@ void N3CtrlFSM::process_control(const ros::Time& now_time)
 	}
 	else if (state == CMD_HOVER)
 	{
-		// CMD控制下悬停控制，（核心！！）
-		// 后期将该状态机改为接受定点控制
+		// 位置定点控制（重要）
 		process_hover_control(u, u_so3);
 	}
 	else if (state == CMD_CTRL)
 	{
-		//ROS_WARN("[n3ctrl] state = CMD_CTRL");//zxzxzxzx
-		//  CMD控制下轨迹追踪控制，（核心！！）
+		// 轨迹追踪控制（重要）
 		process_cmd_control(u, u_so3);
 	}
 	else if (state == CMD_NO_CTRL)
@@ -168,25 +161,10 @@ void N3CtrlFSM::process_idling_control(Controller_Output_t& u, SO3_Controller_Ou
 void N3CtrlFSM::process_hover_control(Controller_Output_t& u, SO3_Controller_Output_t& u_so3)
 {
 	Desired_State_t des;
-	// 将期望位置设定为悬停点
-	// des.p = hover_pose.head<3>();
-	// des.v = Vector3d::Zero();
-	// des.yaw = hover_pose(3);
 
-	if(point_data.get_cmd)
-	{
-		//改为获取指定目标点
-		des.p = point_data.p;
-		des.v = Vector3d::Zero();
-		des.yaw = point_data.yaw;
-	}else
-	{
-		//改为获取指定目标点
-		des.p = point_data.p;
-		des.v = Vector3d::Zero();
-		des.yaw = point_data.yaw;
-	}
-
+	des.p = point_data.p;
+	des.v = Vector3d::Zero();
+	des.yaw = point_data.yaw;
 	des.a = Vector3d::Zero();
 
 	// 后续改为参数，可以选择不同的控制器
@@ -197,9 +175,6 @@ void N3CtrlFSM::process_hover_control(Controller_Output_t& u, SO3_Controller_Out
 	{
 		controller.pos_controller(des, odom_data, u);
 	}
-	
-
-	
 
 	publish_desire(des);
 }
