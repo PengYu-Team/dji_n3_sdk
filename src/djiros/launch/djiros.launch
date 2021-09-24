@@ -4,8 +4,8 @@
         <param name="serial_name" type="string" value="/dev/ttyUSB0"/>
         <param name="baud_rate" type="int" value="921600"/>
         <!-- 此处app_id和enc_key是和DJI账号绑定的，需要更化 -->
-        <param name="app_id" type="int" value="1102742"/>
-        <param name="enc_key" type="string" value="239f44a8220370f85d89ceca6c58501fe177ef31a027af7d65ff9ca5294bc381"/> 
+        <param name="app_id" type="int" value="1109047"/>
+        <param name="enc_key" type="string" value="850d3702599e06e6b056ece80439f245b9eba3e65c75a1425039b2330f666f36"/> 
         <param name="app_version" type="int" value="1"/>
         <param name="sensor_mode" type="bool" value="false"/>
         <param name="align_with_fmu" type="bool" value="false"/>
