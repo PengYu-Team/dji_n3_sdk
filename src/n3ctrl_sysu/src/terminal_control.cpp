@@ -19,7 +19,7 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
 
     //　【发布】　控制指令
-    pos_cmd_pub = nh.advertise<quadrotor_msgs::PositionCommand>("/terminal/point_cmd", 50);
+    pos_cmd_pub = nh.advertise<quadrotor_msgs::PositionCommand>("/dji_n3ctrl/point_cmd", 50);
 
     /* control parameter */
     cmd.kx[0] = pos_gain[0];

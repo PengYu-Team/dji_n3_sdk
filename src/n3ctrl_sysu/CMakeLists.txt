@@ -17,7 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_srvs
   tf
   tf2_eigen
-  #prometheus_msgs
+  prometheus_msgs
   quadrotor_msgs
   geometry_msgs
   uav_utils
@@ -73,6 +73,10 @@ target_link_libraries(vicon_odom ${catkin_LIBRARIES})
 add_executable(vicon_odom_without_vel src/vicon_odom_without_vel.cpp)
 add_dependencies(vicon_odom_without_vel n3ctrl_sysu_gencpp)
 target_link_libraries(vicon_odom_without_vel ${catkin_LIBRARIES})
+
+add_executable(object_tracking src/object_tracking.cpp)
+add_dependencies(object_tracking n3ctrl_sysu_gencpp)
+target_link_libraries(object_tracking ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############

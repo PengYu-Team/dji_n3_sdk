@@ -4,7 +4,7 @@
         <remap from="~odom" to="/dji_n3/odom" />
 		<remap from="~imu" to="/djiros/imu" />
 		<remap from="~cmd" to="/planning/pos_cmd" />
-		<remap from="~point_cmd" to="/terminal/point_cmd" />
+		<remap from="~point_cmd" to="/dji_n3ctrl/point_cmd" />
 
 		<remap from="~desire_pose" to="/desire_pose" />
 		<remap from="~traj_start_trigger" to="/traj_start_trigger" />
