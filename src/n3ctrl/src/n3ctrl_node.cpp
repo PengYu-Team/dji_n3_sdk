@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
                                        ros::VoidConstPtr(),
                                        ros::TransportHints().tcpNoDelay());
 
-    // 新增
+    // 新增(定点控制)
     ros::Subscriber cmd_point_sub = nh.subscribe<quadrotor_msgs::PositionCommand>(
         "point_cmd",
         1000,
@@ -128,6 +128,7 @@ int main(int argc, char* argv[])
         ros::TransportHints().tcpNoDelay());
 
 
+    // 轨迹控制
     // 订阅控制指令，上层发布，回调在input.cpp
     // 期望位置、速度、加速度、期望偏航角、轨迹ID
     ros::Subscriber cmd_sub = nh.subscribe<quadrotor_msgs::PositionCommand>(
@@ -216,8 +217,11 @@ int main(int argc, char* argv[])
         }
     }
 
-    // ros::Timer timer = nh.createTimer(ros::Duration(1.0/1000.0),
-    // 	boost::bind(&N3CtrlFSM::process, &fsm, _1));
+    // ros::Timer print_info_timer = nh.createTimer(ros::Duration(1), &Case2FSM::print_msg_cb, this); 
+
+    // ros::Timer timer = nh.createTimer(ros::Duration(5.0),
+    // 	boost::bind(&N3CtrlFSM::test, &fsm, _1));
+    fsm.printf_count = 0;
 
     // 此处2000Hz不做准，process重新定频率了
     ros::Rate r(2000.0);

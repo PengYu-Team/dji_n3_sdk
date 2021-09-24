@@ -61,6 +61,10 @@ include_directories(
 ###############################
 ##      声明可执行cpp文件     ##
 ###############################
+##terminal_control.cpp
+add_executable(terminal_control src/terminal_control.cpp)
+add_dependencies(terminal_control n3ctrl_sysu_gencpp)
+target_link_libraries(terminal_control ${catkin_LIBRARIES})
 
 add_executable(vicon_odom src/vicon_odom.cpp)
 add_dependencies(vicon_odom n3ctrl_sysu_gencpp)

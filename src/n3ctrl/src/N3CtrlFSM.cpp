@@ -127,6 +127,17 @@ void N3CtrlFSM::process()
 	// 函数定义在N3CtrlFSM_control.cpp
 	process_control(now_time);
 
+	// 状态打印
+    if(printf_count > 200)
+	{
+		printf_state(now_time);
+		printf_count = 0;
+	}else
+	{
+		printf_count++;
+	}
+
+
 	if (state == CMD_HOVER || state == CMD_CTRL)
 	{
 		dbgss << "CmdID: last[" << last_command_id << "] rcv["
@@ -175,6 +186,70 @@ void N3CtrlFSM::process()
 	dbgmsg.stamp = ros::Time::now();
 	dbgmsg.frame_id = std::string(dbgss.str());
 	fsm_dbg_pub.publish(dbgmsg);
+}
+
+void N3CtrlFSM::printf_state(const ros::Time& now_time)
+{
+    cout << GREEN <<">>>>>>>>>>>>>>>>>>>>>>>> DJI N3Ctrl State  <<<<<<<<<<<<<<<<<<<<<<<<<<<"<< TAIL  <<endl;
+    //固定的浮点显示
+    cout.setf(ios::fixed);
+    //setprecision(n) 设显示小数精度为n位
+    cout<<setprecision(2);
+    //左对齐
+    cout.setf(ios::left);
+    // 强制显示小数点
+    cout.setf(ios::showpoint);
+    // 强制显示符号
+    cout.setf(ios::showpos);
+
+	if (state == DIRECT_CTRL)
+	{
+		cout << GREEN  << " [DIRECT_CTRL] "<< TAIL <<endl;
+	}	
+	else if (state == JS_CTRL)
+	{
+		cout << GREEN  << " [JS_CTRL] "<< TAIL <<endl;
+	}
+	else if (state == JS_NO_CTRL)
+	{
+		cout << GREEN  << " [JS_NO_CTRL] "<< TAIL <<endl;
+	}
+	else if (state == JS_RESET_POS_CTRL)
+	{
+		cout << GREEN  << " [JS_RESET_POS_CTRL] "<< TAIL <<endl;
+	}
+	else if (state == CMD_HOVER)
+	{
+		cout << GREEN  << " [CMD_HOVER] "<< TAIL <<endl;
+	}
+	else if (state == CMD_CTRL)
+	{
+		cout << GREEN  << " [CMD_CTRL] "<< TAIL <<endl;
+	}
+	else if (state == CMD_NO_CTRL)
+	{
+		cout << GREEN  << " [CMD_NO_CTRL] "<< TAIL <<endl;
+	}
+	else if (state == CMD_RESET_POS_CTRL)
+	{
+		cout << GREEN  << " [CMD_RESET_POS_CTRL] "<< TAIL <<endl;
+	}
+	else
+	{
+		cout << GREEN  << " [Wrong mode] "<< TAIL <<endl;
+	}
+
+
+	if(point_data.get_cmd)
+	{
+    	cout << GREEN  << "pos_cmd [X Y Z] : " << point_data.p(0) << " [ m ] "<< point_data.p(1) <<" [ m ] "<< point_data.p(2) <<" [ m ] "<< TAIL <<endl;
+	}
+
+	cout << BLUE  << "N3 State: "<< TAIL <<endl;
+    cout << BLUE  << "pos [X Y Z] : " << odom_data.p(0) << " [ m ] "<< odom_data.p(1) <<" [ m ] "<< odom_data.p(2) <<" [ m ] "<< TAIL <<endl;
+    cout << BLUE  << "vel [X Y Z] : " << odom_data.v(0) << " [m/s] "<< odom_data.v(1) <<" [m/s] "<< odom_data.v(2) <<" [m/s] "<< TAIL <<endl;
+	cout << BLUE  << "RC [roll,pitch,yaw,thr,mode,gear] : " << rc_data.roll << "， "<< rc_data.pitch << "， "<< rc_data.yaw << "， "<< rc_data.thr << "， "<< rc_data.mode << "， "<< rc_data.gear << TAIL <<endl;
+
 
 }
 

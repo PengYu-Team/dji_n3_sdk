@@ -183,8 +183,6 @@ void Cmd_point_Data_t::feed(quadrotor_msgs::PositionCommandConstPtr pMsg)
 
     // yaw = 0.0;
 
-    cout << "\033[1;32m" << " ----> Get new point cmd:  [" << p(0) << " , " << p(1) << " , " << p(2) << " ]. "<< "\033[0m" << endl;
-
     yaw = uav_utils::normalize_angle(msg.yaw);
 }
 

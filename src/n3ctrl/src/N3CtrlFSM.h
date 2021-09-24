@@ -12,6 +12,7 @@
 #include "hovthrkf.h"
 #include "controller.h"
 #include "N3CtrlStateVisualization.h"
+#include "printf_utils.h"
 
 class N3CtrlFSM
 {
@@ -40,6 +41,7 @@ public:
 	uint32_t last_command_id;
 
 	ros::Time last_ctrl_time;
+	int printf_count;
 
 	enum State_t
 	{
@@ -95,6 +97,7 @@ public:
 
 	N3CtrlFSM(Parameter_t &, Controller &, HovThrKF &);
 	void process();
+	void print_info_cb(const ros::TimerEvent& e);
 	bool rc_is_received(const ros::Time& now_time);
 	void set_work_mode(Work_Mode_t mode);
 	void set_js_ctrl_mode(JS_CTRL_Mode_t mode);
@@ -106,6 +109,7 @@ private:
 	JS_CTRL_Mode_t js_ctrl_mode;
 	Idling_State_t idling_state;
 	ros::Time idling_start_time;
+	
 
 	// ---- state process ----
 	void determine_idling(const ros::Time& now_time);
@@ -125,6 +129,7 @@ private:
 	void process_cmd_control(Controller_Output_t& u, SO3_Controller_Output_t& u_so3);
 	void process_js_control(Controller_Output_t& u, SO3_Controller_Output_t& u_so3);
 	void publish_desire(const Desired_State_t& des);
+	void printf_state(const ros::Time& now_time);
 
 	// ---- tools ----
 	void flush_last_command_id();
