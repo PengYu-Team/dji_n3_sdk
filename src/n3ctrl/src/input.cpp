@@ -39,6 +39,10 @@ void RC_Data_t::feed(sensor_msgs::JoyConstPtr pMsg) {
     msg = *pMsg;
     rcv_stamp = ros::Time::now();
 
+    // 遥控器定义：
+    // 1-4通道：roll、pitch、yaw、thr
+    // 5通道：启动api控制
+    // 6通道：启动cmd控制
     roll = msg.axes[0];
     pitch = msg.axes[1];
     yaw = msg.axes[2];
