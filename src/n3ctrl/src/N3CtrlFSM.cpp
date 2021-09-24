@@ -248,8 +248,16 @@ void N3CtrlFSM::printf_state(const ros::Time& now_time)
 	cout << BLUE  << "N3 State: "<< TAIL <<endl;
     cout << BLUE  << "pos [X Y Z] : " << odom_data.p(0) << " [ m ] "<< odom_data.p(1) <<" [ m ] "<< odom_data.p(2) <<" [ m ] "<< TAIL <<endl;
     cout << BLUE  << "vel [X Y Z] : " << odom_data.v(0) << " [m/s] "<< odom_data.v(1) <<" [m/s] "<< odom_data.v(2) <<" [m/s] "<< TAIL <<endl;
-	cout << BLUE  << "RC [roll,pitch,yaw,thr,mode,gear] : " << rc_data.roll << "， "<< rc_data.pitch << "， "<< rc_data.yaw << "， "<< rc_data.thr << "， "<< rc_data.mode << "， "<< rc_data.gear << TAIL <<endl;
-
+	cout << BLUE  << "RC State: "<< TAIL <<endl;
+	cout << BLUE  << "Main channel [roll,pitch,yaw,thr] : [" << rc_data.roll << "， "<< rc_data.pitch << "， "<< rc_data.yaw << "， "<< rc_data.thr << "] " << TAIL <<endl;
+	cout << BLUE  << "Aux chaneel [mode,gear] : [" << rc_data.mode << "， "<< rc_data.gear << "] "<< TAIL <<endl;
+	cout << BLUE  << "Controller State: "<< TAIL <<endl;
+	cout << BLUE  << "low level cmd [roll,pitch,yaw,thr] : [" << controller.control_u.roll << "， "<< controller.control_u.pitch << "， "<< controller.control_u.yaw << "， "<< controller.control_u.thrust<< " ]"<< TAIL <<endl;
+	cout << BLUE  << "low level cmd [mode,yaw_mode]: [" << controller.control_u.mode << "， "<< controller.control_u.yaw_mode << "] "<< TAIL <<endl;
+	// full_thrust = mass * gra / hov_thr_kf.get_hov_thr()
+	// u.thrust = u1 / param.full_thrust;
+	cout << BLUE  << "Hover (full thrust): " << param.mass * param.gra / hov_thr_kf.get_hov_thr() << TAIL <<endl;
+	
 
 }
 

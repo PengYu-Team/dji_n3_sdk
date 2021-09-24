@@ -24,9 +24,6 @@ struct Controller_Output_t
 {
 	static constexpr double VERT_VELO = -1.0;
 	static constexpr double VERT_THRU = 1.0;
-
-	// static constexpr double CTRL_YAW_RATE = -1.0; //zxzxzxzx
- //    static constexpr double CTRL_YAW = 1.0;
     static constexpr double CTRL_YAW_RATE = 1.0;
     static constexpr double CTRL_YAW = 0.0;
 
@@ -51,6 +48,7 @@ class Controller
 {
 public:
 	Parameter_t& param;
+	Controller_Output_t control_u;
 
 	ros::Publisher ctrl_pub;
 	// ros::Publisher ctrl_so3_pub;

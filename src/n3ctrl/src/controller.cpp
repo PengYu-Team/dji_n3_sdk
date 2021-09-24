@@ -352,6 +352,9 @@ void Controller::update(
 
 void Controller::publish_ctrl(const Controller_Output_t& u, const ros::Time& stamp, const ros::Time& extra_stamp)
 {
+	// 存储
+	control_u = u;
+
 	sensor_msgs::Joy msg;
 
 	msg.header.stamp = stamp;

@@ -11,7 +11,7 @@
 		<remap from="~ctrl" to="/djiros/ctrl" />
 
 		<rosparam command="load" file="$(find n3ctrl)/config/ctrl_param_dji.yaml" />
-        <param name="work_mode" value="real" />
+        <param name="work_mode" value="simulation" />
         <param name="js_ctrl_mode" value="feedback" />
 	</node>
 </launch>
