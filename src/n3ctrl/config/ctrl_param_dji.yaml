@@ -7,7 +7,7 @@ gra         : 9.81
 # 此处其实可以直接将hov_percent设置为0
 # 悬停油门设置很有意思，可以加入prometheus中
 # 油门补偿也可以，但需要加速度值准确
-hov_percent : 0.10
+hov_percent : 0.25
 # full_thrust 会在程序中根据mass和hov_percent重新计算
 # 起飞前短暂时间使用的是hov_percent计算的悬停油门，起飞后会根据加速度状态更新full_thrust
 # u.thrust = u1 / param.full_thrust
