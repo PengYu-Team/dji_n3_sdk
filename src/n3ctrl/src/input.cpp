@@ -167,6 +167,8 @@ void Command_Data_t::feed(quadrotor_msgs::PositionCommandConstPtr pMsg) {
 
     trajectory_id = msg.trajectory_id;
     trajectory_flag = msg.trajectory_flag;
+
+    cout << YELLOW  << " GET NEW TRAJ POINT CMD"<< TAIL <<endl;
 }
 
 Cmd_point_Data_t::Cmd_point_Data_t() 
@@ -188,6 +190,8 @@ void Cmd_point_Data_t::feed(quadrotor_msgs::PositionCommandConstPtr pMsg)
     // yaw = 0.0;
 
     yaw = uav_utils::normalize_angle(msg.yaw);
+
+    cout << YELLOW  << " GET NEW HOVER POINT CMD"<< TAIL <<endl;
 }
 
 Idling_Data_t::Idling_Data_t() {
